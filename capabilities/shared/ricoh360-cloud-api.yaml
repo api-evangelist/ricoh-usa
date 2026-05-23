@@ -1,0 +1,50 @@
+name: ricoh360-cloud-api
+title: RICOH360 Cloud API Capabilities
+description: |
+  Capability inventory inferred from public RICOH360 Cloud API documentation
+  (https://docs.ricoh360.com/, https://www.ricoh360.com/developer/). Actual
+  endpoint paths, parameters, and auth specifics are gated behind application
+  approval; this file enumerates the public capability surface.
+provider: ricoh-usa
+api: ricoh360-cloud-api
+capabilities:
+  - id: upload-image
+    title: Upload 360 Image
+    description: Upload a captured 360 image from a THETA device or partner camera into the RICOH360 Cloud.
+    tags: [Write, Media]
+  - id: list-images
+    title: List 360 Images
+    description: Enumerate uploaded 360 images for an account or project.
+    tags: [Read, Media]
+  - id: download-image
+    title: Download 360 Image
+    description: Retrieve a stored 360 image in equirectangular projection.
+    tags: [Read, Media]
+  - id: ai-process-image
+    title: AI-Process Image
+    description: Apply AI image processing such as automatic blur, stitching correction, or enhancement.
+    tags: [Write, Processing]
+  - id: create-tour
+    title: Create Virtual Tour
+    description: Compose a virtual tour from a set of stored 360 images with linked hotspots.
+    tags: [Write, Tour]
+  - id: share-tour
+    title: Share Tour
+    description: Generate a shareable URL or embed for a virtual tour.
+    tags: [Write, Sharing]
+  - id: register-device
+    title: Register Device
+    description: Register a THETA camera to a fleet for bulk administration.
+    tags: [Write, Fleet]
+  - id: push-firmware
+    title: Push Firmware Update
+    description: Schedule a firmware update across a fleet of registered THETA cameras.
+    tags: [Write, Fleet, Administration]
+  - id: push-configuration
+    title: Push Configuration
+    description: Push a configuration profile (Wi-Fi, plug-in selection, options) to one or many cameras.
+    tags: [Write, Fleet, Administration]
+  - id: live-streaming-session
+    title: Live Streaming Session
+    description: Initialize a live 360 streaming session for a registered camera.
+    tags: [Write, Streaming]

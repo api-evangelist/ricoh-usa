@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-schema/theta-web-api-command-execute-schema.json",
+  "title": "RICOH THETA Command Execute Envelope",
+  "description": "Request and response envelopes used by /osc/commands/execute and /osc/commands/status.",
+  "type": "object",
+  "oneOf": [
+    {
+      "title": "Request",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "OSC command name, e.g. camera.takePicture."
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    {
+      "title": "Response",
+      "required": ["name", "state"],
+      "properties": {
+        "name": { "type": "string" },
+        "state": {
+          "type": "string",
+          "enum": ["done", "inProgress", "error"]
+        },
+        "id": { "type": "string" },
+        "results": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": { "type": "string" },
+            "message": { "type": "string" }
+          }
+        },
+        "progress": {
+          "type": "object",
+          "properties": {
+            "completion": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

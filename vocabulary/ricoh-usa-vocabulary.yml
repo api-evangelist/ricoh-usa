@@ -1,0 +1,184 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Ricoh USA
+  description: >-
+    Unified taxonomy across Ricoh USA's developer surfaces — RICOH THETA Web / Bluetooth / USB APIs,
+    RICOH360 Cloud API, and the Ricoh Smart Integration workflow platform — mapping operational
+    dimensions (devices, captures, media, options, plug-ins, workflows) and capability dimensions
+    (camera control, fleet management, virtual tours, scan-to-cloud) into a single reference.
+  created: "2026-05-23"
+  modified: "2026-05-23"
+
+operational:
+  apis:
+    - name: RICOH THETA Web API
+      namespace: theta-web-api
+      version: "2.1"
+      baseUrl: http://192.168.1.1
+      status: active
+    - name: RICOH THETA Bluetooth API
+      namespace: theta-bluetooth-api
+      version: GATT
+      status: active
+    - name: RICOH THETA USB API
+      namespace: theta-usb-api
+      version: MTP-1.1
+      status: active
+    - name: RICOH360 Cloud API
+      namespace: ricoh360-cloud-api
+      baseUrl: https://docs.ricoh360.com
+      status: gated
+    - name: Ricoh Smart Integration
+      namespace: smart-integration
+      baseUrl: https://www.ricoh-usa.com
+      status: contact-only
+
+  resources:
+    - name: device
+      description: A physical RICOH THETA camera identified by serial number, model, and firmware.
+      api: theta-web-api
+      actions: [info, state, reset]
+    - name: capture
+      description: A still image or video capture session initiated on the camera.
+      api: theta-web-api
+      actions: [take, start, stop, status]
+    - name: file
+      description: A media file stored on the camera (JPG, MP4, DNG).
+      api: theta-web-api
+      actions: [list, get, delete, metadata]
+    - name: option
+      description: A named camera setting (ISO, shutter speed, white balance, captureMode, etc).
+      api: theta-web-api
+      actions: [get, set, reset]
+    - name: plugin
+      description: An Android-based plug-in installed on the camera.
+      api: theta-web-api
+      actions: [list, select, control, license]
+    - name: access-point
+      description: A Wi-Fi network configured for client-mode operation.
+      api: theta-web-api
+      actions: [list, set, delete]
+    - name: cloud-image
+      description: A 360 image stored in the RICOH360 Cloud.
+      api: ricoh360-cloud-api
+      actions: [upload, list, download, process]
+    - name: tour
+      description: A virtual tour composed of multiple 360 images with hotspots.
+      api: ricoh360-cloud-api
+      actions: [create, share]
+    - name: fleet-device
+      description: A registered THETA camera under RICOH360 fleet management.
+      api: ricoh360-cloud-api
+      actions: [register, push-firmware, push-configuration]
+    - name: scan-workflow
+      description: A scan-to-cloud workflow connecting a Ricoh MFP to a cloud destination.
+      api: smart-integration
+      actions: [run]
+
+  actions:
+    - name: take
+      pattern: write
+    - name: start
+      pattern: write
+    - name: stop
+      pattern: write
+    - name: list
+      http_method: POST
+      pattern: read
+    - name: get
+      http_method: POST
+      pattern: read
+    - name: set
+      http_method: POST
+      pattern: write
+    - name: reset
+      pattern: write
+    - name: upload
+      pattern: write
+    - name: download
+      pattern: read
+    - name: create
+      pattern: write
+    - name: share
+      pattern: write
+    - name: register
+      pattern: write
+    - name: push-firmware
+      pattern: write
+    - name: push-configuration
+      pattern: write
+    - name: run
+      pattern: write
+
+  schemas:
+    core:
+      - name: CameraInfo
+        description: Immutable identity and feature flags of a THETA camera.
+      - name: CameraState
+        description: Mutable state (battery, storage, capture status) with a fingerprint.
+      - name: CommandExecuteRequest
+        description: OSC command envelope (name + parameters).
+      - name: CommandExecuteResponse
+        description: OSC command result envelope (state, results, error, progress).
+      - name: FileEntry
+        description: A media file listed by camera.listFiles.
+      - name: Options
+        description: Bag of named camera options.
+    cloud:
+      - name: CloudImage
+        description: A 360 image stored in the RICOH360 Cloud.
+      - name: VirtualTour
+        description: A composed tour of cloud-stored 360 images.
+
+capability:
+  domains:
+    - name: Camera Control
+      description: Direct device-level control of THETA cameras (Wi-Fi, Bluetooth, USB).
+    - name: Media Management
+      description: Listing, retrieving, deleting, and inspecting metadata of camera media.
+    - name: Cloud Imagery
+      description: Uploading, processing, and delivering 360 images via RICOH360 Cloud.
+    - name: Virtual Tour
+      description: Composing and sharing virtual tours from spatial imagery.
+    - name: Fleet Administration
+      description: Bulk registration, firmware updates, and configuration of THETA fleets.
+    - name: Document Workflow
+      description: Scan-to-cloud and document conversion via Ricoh Smart Integration MFPs.
+
+  personas:
+    - name: App Developer
+      description: Builds mobile or desktop apps that control THETA cameras directly.
+    - name: Solutions Integrator
+      description: Builds cloud workflows around RICOH360 Cloud or Smart Integration.
+    - name: Fleet Administrator
+      description: Operates many THETA cameras for construction, real estate, or insurance.
+    - name: MFP Workflow Owner
+      description: Designs and runs scan-to-cloud / OCR workflows on Ricoh multifunction printers.
+
+  tagsTaxonomy:
+    domains:
+      - 360 Cameras
+      - Imaging
+      - Workflow Automation
+      - Document Management
+      - Printing
+      - Workplace Services
+    protocols:
+      - OSC
+      - GATT
+      - MTP
+      - REST
+    operations:
+      - Read
+      - Write
+      - Streaming
+      - Polling
+    resourceTypes:
+      - Device
+      - Media
+      - Settings
+      - Plugins
+      - Network
+      - Fleet
+      - Tour

@@ -1,0 +1,60 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Ricoh USA
+providerId: ricoh-usa
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: false
+tags:
+  - Printing
+  - Document Management
+  - 360 Cameras
+  - Rate Limiting
+description: |
+  The RICOH THETA Web API runs locally on the camera over Wi-Fi and has no documented per-second
+  request ceiling; effective throughput is bounded by the device's compute, Wi-Fi link quality, and
+  the exclusive-use model (only one client can hold the camera at a time, signaled by the
+  cameraInExclusiveUse error). Long-running commands return state: "inProgress" and require polling
+  /osc/commands/status, which is itself the back-pressure mechanism. The RICOH360 Cloud API and
+  Smart Integration platform do not publish public rate limits; limits and quotas are defined in
+  the customer's commercial agreement.
+notes: |
+  No public rate-limit numbers exist for any of Ricoh USA's API surfaces. The THETA Web API uses
+  command queueing plus the cameraInExclusiveUse error rather than HTTP 429 throttling. Cloud
+  limits are contract-defined.
+sources:
+  - https://docs-theta-api.ricoh360.com/
+  - https://github.com/ricohapi/theta-api-specs
+  - https://docs.ricoh360.com/
+responseCodes:
+  throttled: null
+  exclusiveUse: cameraInExclusiveUse
+  commandInProgress: 'state: inProgress'
+limits:
+  - name: THETA Web API exclusive use
+    scope: device
+    metric: concurrent client
+    limit: 1 client at a time per camera; subsequent requests return cameraInExclusiveUse
+  - name: THETA Web API in-progress commands
+    scope: device
+    metric: in-flight commands
+    limit: typically 1 long-running capture / convert command at a time
+  - name: RICOH360 Cloud API
+    scope: account
+    metric: varies
+    limit: contract-defined; not publicly listed
+  - name: Ricoh Smart Integration
+    scope: account
+    metric: varies
+    limit: contract-defined; not publicly listed
+policies:
+  - name: Exclusive-use serialization
+    description: Only one HTTP client at a time may hold the THETA camera; concurrent attempts get the cameraInExclusiveUse error instead of a 429.
+  - name: Polling for long-running commands
+    description: Capture, video conversion, and similar long-running commands return state="inProgress" with an id; clients poll /osc/commands/status rather than relying on the camera to push.
+  - name: Contract-defined cloud throttling
+    description: RICOH360 Cloud and Smart Integration throughput, concurrency, and quotas are defined in the customer contract; coordinate volume changes with the Ricoh integration team.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

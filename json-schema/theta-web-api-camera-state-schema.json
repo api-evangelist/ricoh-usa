@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-schema/theta-web-api-camera-state-schema.json",
+  "title": "RICOH THETA Camera State",
+  "description": "Response shape for /osc/state.",
+  "type": "object",
+  "required": ["fingerprint", "state"],
+  "properties": {
+    "fingerprint": {
+      "type": "string",
+      "description": "Opaque token used with /osc/checkForUpdates to detect state changes."
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "batteryLevel": { "type": "number", "minimum": 0, "maximum": 1 },
+        "storageUri": { "type": "string" },
+        "_captureStatus": {
+          "type": "string",
+          "enum": ["idle", "shooting", "self-timer-countdown", "bracket-shooting", "converting", "timeshift-shooting"]
+        },
+        "_recordedTime": { "type": "integer" },
+        "_recordableTime": { "type": "integer" },
+        "_capturedPictures": { "type": "integer" },
+        "_latestFileUrl": { "type": "string", "format": "uri" },
+        "_batteryState": {
+          "type": "string",
+          "enum": ["charging", "charged", "disconnect"]
+        },
+        "_apiVersion": { "type": "integer", "enum": [1, 2] }
+      }
+    }
+  }
+}

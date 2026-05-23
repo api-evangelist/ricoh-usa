@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-structure.org/schema/v0",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-structure/theta-web-api-file-entry-structure.json",
+  "title": "RICOH THETA File Entry",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "fileUrl": { "type": "string" },
+    "size": { "type": "integer" },
+    "dateTimeZone": { "type": "string" },
+    "width": { "type": "integer" },
+    "height": { "type": "integer" },
+    "isProcessed": { "type": "boolean" },
+    "_projectionType": { "type": "string" },
+    "_codec": { "type": "string" },
+    "_recordTime": { "type": "integer" }
+  }
+}

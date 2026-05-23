@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "http://192.168.1.1/osc/commands/execute",
+    "headers": {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    "body": {
+      "name": "camera.listFiles",
+      "parameters": {
+        "fileType": "all",
+        "entryCount": 10,
+        "maxThumbSize": 0
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "name": "camera.listFiles",
+      "state": "done",
+      "results": {
+        "entries": [
+          {
+            "name": "R0010001.JPG",
+            "fileUrl": "http://192.168.1.1/files/abc123/100RICOH/R0010001.JPG",
+            "size": 7864320,
+            "dateTimeZone": "2026:05:23 14:01:22+09:00",
+            "width": 11008,
+            "height": 5504,
+            "isProcessed": true,
+            "_projectionType": "Equirectangular"
+          }
+        ],
+        "totalEntries": 142
+      }
+    }
+  }
+}

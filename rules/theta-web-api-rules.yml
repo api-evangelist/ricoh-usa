@@ -1,0 +1,217 @@
+rules:
+
+  # INFO / METADATA
+  info-title-pattern:
+    description: API info title should start with "RICOH THETA".
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: "^RICOH THETA "
+
+  info-description-required:
+    description: API info description must be present and at least 50 characters.
+    severity: warn
+    given: $.info
+    then:
+      field: description
+      function: minLength
+      functionOptions:
+        value: 50
+
+  info-version-required:
+    description: API version must be defined.
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3:
+    description: Must use OpenAPI 3.x.
+    severity: error
+    given: $
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS — THETA Web API is LAN-only, so HTTPS is not required;
+  # we instead require that the server uses an IP address or local hostname.
+  servers-must-be-defined:
+    description: Servers array must be defined and non-empty.
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  servers-description-required:
+    description: Each server must have a description.
+    severity: warn
+    given: $.servers[*]
+    then:
+      field: description
+      function: truthy
+
+  # PATHS — OSC NAMING CONVENTIONS
+  paths-osc-prefix:
+    description: All paths should live under /osc/ (OSC Level 2 convention).
+    severity: error
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/osc/"
+
+  paths-no-trailing-slash:
+    description: Paths must not end with a trailing slash.
+    severity: warn
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ".+/$"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Every operation must have a summary.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-title-case:
+    description: Operation summaries should be in Title Case.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z][a-z0-9]*)( [A-Z][a-z0-9]*)*( [A-Z]+)?$"
+
+  operation-description-required:
+    description: Every operation should have a description.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: description
+      function: truthy
+
+  operation-operationid-required:
+    description: Every operation must have an operationId.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camelcase:
+    description: OperationId should use camelCase.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  operation-tags-required:
+    description: Every operation must have at least one tag.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: tags
+      function: truthy
+
+  # OSC COMMAND ENVELOPE
+  command-execute-uses-post:
+    description: /osc/commands/execute must be POST only (per OSC spec).
+    severity: error
+    given: $.paths['/osc/commands/execute']
+    then:
+      field: post
+      function: truthy
+
+  command-status-uses-post:
+    description: /osc/commands/status must be POST only (per OSC spec).
+    severity: error
+    given: $.paths['/osc/commands/status']
+    then:
+      field: post
+      function: truthy
+
+  # TAGS
+  tag-description-required:
+    description: Global tags must have descriptions.
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  # REQUEST BODIES
+  request-body-json-content:
+    description: Request bodies must declare application/json content.
+    severity: error
+    given: $.paths[*][post,put,patch].requestBody.content
+    then:
+      field: application/json
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must define at least one success response.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+
+  response-description-required:
+    description: Every response must have a description.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses[*]
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS
+  schema-description-required:
+    description: Component schemas must have descriptions.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: description
+      function: truthy
+
+  schema-type-required:
+    description: Schemas should define a type.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: type
+      function: truthy
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body.
+    severity: error
+    given: $.paths[*].get
+    then:
+      field: requestBody
+      function: falsy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty.
+    severity: warn
+    given: $..description
+    then:
+      function: truthy

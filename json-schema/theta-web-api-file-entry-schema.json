@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-schema/theta-web-api-file-entry-schema.json",
+  "title": "RICOH THETA File Entry",
+  "description": "Entry returned by camera.listFiles describing a single media item on the device.",
+  "type": "object",
+  "required": ["name", "fileUrl", "size"],
+  "properties": {
+    "name": { "type": "string" },
+    "fileUrl": { "type": "string", "format": "uri" },
+    "size": { "type": "integer", "minimum": 0 },
+    "dateTimeZone": { "type": "string" },
+    "width": { "type": "integer" },
+    "height": { "type": "integer" },
+    "thumbnail": { "type": "string", "description": "Base64 thumbnail when requested." },
+    "previewUrl": { "type": "string", "format": "uri" },
+    "isProcessed": { "type": "boolean" },
+    "_projectionType": {
+      "type": "string",
+      "enum": ["Equirectangular", "Dual-Fisheye"]
+    },
+    "_codec": {
+      "type": "string",
+      "enum": ["H.264/MPEG-4 AVC", "H.265/HEVC"]
+    },
+    "_thumbSize": { "type": "integer" },
+    "_intervalCaptureGroupId": { "type": "string" },
+    "_compositeShootingGroupId": { "type": "string" },
+    "_autoBracketGroupId": { "type": "string" },
+    "_recordTime": { "type": "integer", "description": "Duration in seconds for video files." }
+  }
+}

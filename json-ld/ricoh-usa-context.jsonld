@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "ricoh": "https://www.ricoh-usa.com/ns#",
+    "theta": "https://docs-theta-api.ricoh360.com/ns#",
+    "cloud": "https://docs.ricoh360.com/ns#",
+
+    "Provider": "schema:Organization",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "logo": "schema:logo",
+
+    "Camera": "ricoh:Camera",
+    "model": "schema:model",
+    "manufacturer": "schema:manufacturer",
+    "serialNumber": "schema:serialNumber",
+    "firmwareVersion": "ricoh:firmwareVersion",
+    "apiLevel": "theta:apiLevel",
+    "wlanMacAddress": "ricoh:wlanMacAddress",
+    "bluetoothMacAddress": "ricoh:bluetoothMacAddress",
+
+    "CameraState": "theta:CameraState",
+    "fingerprint": "theta:fingerprint",
+    "batteryLevel": "theta:batteryLevel",
+    "storageUri": "theta:storageUri",
+    "captureStatus": "theta:captureStatus",
+    "recordedTime": "theta:recordedTime",
+    "recordableTime": "theta:recordableTime",
+    "capturedPictures": "theta:capturedPictures",
+    "latestFileUrl": "theta:latestFileUrl",
+
+    "Command": "theta:Command",
+    "commandName": "theta:commandName",
+    "parameters": "theta:parameters",
+    "results": "theta:results",
+    "progress": "theta:progress",
+    "completion": "theta:completion",
+
+    "MediaFile": {
+      "@id": "ricoh:MediaFile",
+      "@type": "schema:MediaObject"
+    },
+    "fileUrl": "schema:contentUrl",
+    "size": "schema:contentSize",
+    "width": "schema:width",
+    "height": "schema:height",
+    "dateTimeZone": "schema:dateCreated",
+    "projectionType": "theta:projectionType",
+    "codec": "schema:encodingFormat",
+    "thumbnail": "schema:thumbnail",
+    "previewUrl": "schema:contentUrl",
+
+    "Plugin": "theta:Plugin",
+    "pluginPackageName": "theta:pluginPackageName",
+    "pluginVersion": "theta:pluginVersion",
+
+    "AccessPoint": "theta:AccessPoint",
+    "ssid": "theta:ssid",
+    "security": "theta:security",
+    "connectionPriority": "theta:connectionPriority",
+
+    "CloudImage": "cloud:CloudImage",
+    "imageId": "cloud:imageId",
+    "uploadedAt": "schema:dateCreated",
+    "owner": "schema:author",
+
+    "VirtualTour": {
+      "@id": "cloud:VirtualTour",
+      "@type": "schema:CreativeWork"
+    },
+    "tourId": "cloud:tourId",
+    "scenes": "cloud:scenes",
+    "shareUrl": "schema:url",
+
+    "FleetDevice": "cloud:FleetDevice",
+    "registeredAt": "schema:dateCreated",
+    "lastSeenAt": "cloud:lastSeenAt",
+
+    "Error": "theta:Error",
+    "code": "schema:identifier",
+    "message": "schema:description"
+  }
+}

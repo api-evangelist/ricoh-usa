@@ -1,0 +1,109 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RICOH THETA Media Management
+  description: |
+    Workflow capability for browsing, retrieving, and deleting media stored on a RICOH THETA camera
+    via its OSC Web API.
+  tags:
+    - ricoh-usa
+    - THETA
+    - 360 Cameras
+    - Media
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+  - namespace: env
+    keys:
+      THETA_BASE_URL: THETA_BASE_URL
+capability:
+  consumes:
+    - type: http
+      namespace: theta-media
+      baseUri: '{{env.THETA_BASE_URL}}'
+      description: RICOH THETA OSC commands for media management.
+      resources:
+        - name: commands
+          path: /osc/commands/execute
+          operations:
+            - name: listFiles
+              method: POST
+              description: List files on the camera (camera.listFiles)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: deleteFiles
+              method: POST
+              description: Delete files on the camera (camera.delete)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: getMetadata
+              method: POST
+              description: Get metadata for a media file (camera._getMetadata)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+      authentication:
+        type: none
+  exposes:
+    - type: rest
+      namespace: theta-media-rest
+      port: 8080
+      description: REST adapter exposing simplified media verbs under /v1.
+      resources:
+        - path: /v1/files
+          name: files
+          description: List or delete media files.
+          operations:
+            - method: GET
+              name: listFiles
+              description: List Files
+              call: theta-media.listFiles
+              with:
+                body: '{ "name": "camera.listFiles", "parameters": { "fileType": "all", "entryCount": 50, "maxThumbSize": 0 } }'
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: DELETE
+              name: deleteFiles
+              description: Delete Files
+              call: theta-media.deleteFiles
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/files/metadata
+          name: metadata
+          description: Get metadata for a media file.
+          operations:
+            - method: POST
+              name: getMetadata
+              description: Get File Metadata
+              call: theta-media.getMetadata
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.

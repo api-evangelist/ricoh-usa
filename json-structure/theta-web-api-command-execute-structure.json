@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-structure.org/schema/v0",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-structure/theta-web-api-command-execute-structure.json",
+  "title": "RICOH THETA Command Execute Envelope",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "parameters": { "type": "object" },
+    "state": { "type": "string" },
+    "id": { "type": "string" },
+    "results": { "type": "object" },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "completion": { "type": "number" }
+      }
+    }
+  }
+}

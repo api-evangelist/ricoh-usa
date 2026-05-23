@@ -1,0 +1,180 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RICOH THETA Camera Control
+  description: |
+    End-to-end workflow capability for controlling a RICOH THETA 360 camera over its OSC Web API:
+    discover camera state, configure options, trigger a capture, and retrieve the resulting file URL.
+  tags:
+    - ricoh-usa
+    - THETA
+    - 360 Cameras
+    - Camera Control
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+  - namespace: env
+    keys:
+      THETA_BASE_URL: THETA_BASE_URL
+capability:
+  consumes:
+    - type: http
+      namespace: theta
+      baseUri: '{{env.THETA_BASE_URL}}'
+      description: RICOH THETA camera OSC Web API. No authentication on the device itself when in access-point mode.
+      resources:
+        - name: info
+          path: /osc/info
+          operations:
+            - name: getInfo
+              method: GET
+              description: Get Camera Info
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: state
+          path: /osc/state
+          operations:
+            - name: getState
+              method: POST
+              description: Get Camera State
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: commands
+          path: /osc/commands/execute
+          operations:
+            - name: takePicture
+              method: POST
+              description: Take a still picture (camera.takePicture)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: '{ "name": "camera.takePicture" }'
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: startCapture
+              method: POST
+              description: Start a video / interval / composite capture (camera.startCapture)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: stopCapture
+              method: POST
+              description: Stop the running capture (camera.stopCapture)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+            - name: setOptions
+              method: POST
+              description: Update camera options (camera.setOptions)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+      authentication:
+        type: none
+  exposes:
+    - type: rest
+      namespace: theta-camera-control-rest
+      port: 8080
+      description: REST adapter exposing simplified verbs for THETA camera control under /v1.
+      resources:
+        - path: /v1/info
+          name: info
+          description: Camera information.
+          operations:
+            - method: GET
+              name: getInfo
+              description: Get Camera Info
+              call: theta.getInfo
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/state
+          name: state
+          description: Camera state.
+          operations:
+            - method: GET
+              name: getState
+              description: Get Camera State
+              call: theta.getState
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/captures/picture
+          name: take-picture
+          description: Take a still picture.
+          operations:
+            - method: POST
+              name: takePicture
+              description: Take Picture
+              call: theta.takePicture
+              with:
+                body: '{ "name": "camera.takePicture" }'
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/captures/video
+          name: video-capture
+          description: Start or stop a video capture.
+          operations:
+            - method: POST
+              name: startCapture
+              description: Start Capture
+              call: theta.startCapture
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: DELETE
+              name: stopCapture
+              description: Stop Capture
+              call: theta.stopCapture
+              with:
+                body: '{ "name": "camera.stopCapture" }'
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/options
+          name: options
+          description: Update camera options.
+          operations:
+            - method: PUT
+              name: setOptions
+              description: Set Options
+              call: theta.setOptions
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.

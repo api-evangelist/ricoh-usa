@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-schema/theta-web-api-device-info-schema.json",
+  "title": "RICOH THETA Camera Info",
+  "description": "Response shape for /osc/info on a RICOH THETA device.",
+  "type": "object",
+  "required": ["manufacturer", "model", "serialNumber", "firmwareVersion", "apiLevel"],
+  "properties": {
+    "manufacturer": { "type": "string", "examples": ["RICOH"] },
+    "model": { "type": "string", "examples": ["RICOH THETA X", "RICOH THETA Z1", "RICOH THETA A1"] },
+    "serialNumber": { "type": "string" },
+    "firmwareVersion": { "type": "string" },
+    "supportUrl": { "type": "string", "format": "uri" },
+    "gps": { "type": "boolean" },
+    "gyro": { "type": "boolean" },
+    "uptime": { "type": "integer", "minimum": 0, "description": "Seconds since the device booted." },
+    "api": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Supported OSC endpoints, e.g. /osc/info, /osc/state, /osc/commands/execute."
+    },
+    "endpoints": {
+      "type": "object",
+      "properties": {
+        "httpPort": { "type": "integer" },
+        "httpUpdatesPort": { "type": "integer" }
+      }
+    },
+    "apiLevel": {
+      "type": "array",
+      "items": { "type": "integer", "enum": [1, 2] }
+    },
+    "_wlanMacAddress": { "type": "string" },
+    "_bluetoothMacAddress": { "type": "string" }
+  }
+}

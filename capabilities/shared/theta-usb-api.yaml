@@ -1,0 +1,41 @@
+name: theta-usb-api
+title: RICOH THETA USB API Capabilities
+description: MTP-based USB capabilities for tethered RICOH THETA control and media transfer.
+provider: ricoh-usa
+api: theta-usb-api
+capabilities:
+  - id: get-device-info
+    title: Get Device Info
+    description: Standard MTP GetDeviceInfo returning manufacturer, model, firmware, and supported operations.
+    operation: mtpGetDeviceInfo
+    tags: [Read, Device]
+  - id: initiate-capture
+    title: Initiate Capture
+    description: Trigger a still capture via MTP InitiateCapture or Ricoh extension.
+    operation: mtpInitiateCapture
+    tags: [Write, Shooting]
+  - id: get-object-handles
+    title: Get Object Handles
+    description: Enumerate media handles for retrieval.
+    operation: mtpGetObjectHandles
+    tags: [Read, Media]
+  - id: get-object
+    title: Get Object
+    description: Download a still or video by object handle.
+    operation: mtpGetObject
+    tags: [Read, Media]
+  - id: delete-object
+    title: Delete Object
+    description: Delete a media object by handle.
+    operation: mtpDeleteObject
+    tags: [Write, Media]
+  - id: get-live-preview
+    title: Get Live Preview (UVC)
+    description: Open a USB Video Class stream for high-FPS live preview (libuvc-theta).
+    operation: uvcStream
+    tags: [Read, Streaming]
+  - id: get-set-device-prop
+    title: Get / Set Device Property
+    description: Read or write camera properties such as ISO, shutter, white balance via MTP property operations.
+    operation: mtpDeviceProp
+    tags: [Read, Write, Settings]

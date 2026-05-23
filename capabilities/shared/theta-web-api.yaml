@@ -1,0 +1,152 @@
+name: theta-web-api
+title: RICOH THETA Web API Capabilities
+description: Per-operation capabilities exposed by the RICOH THETA Web API (OSC-conforming) over Wi-Fi.
+provider: ricoh-usa
+api: theta-web-api
+specification: openapi/theta-web-api-openapi.yml
+capabilities:
+  - id: get-info
+    title: Get Camera Info
+    description: Retrieve immutable camera identity (model, firmware, MACs, supported API levels).
+    operation: getInfo
+    method: GET
+    path: /osc/info
+    tags: [Read, Device]
+  - id: get-state
+    title: Get Camera State
+    description: Retrieve mutable state (battery, storage, capture status, fingerprint).
+    operation: getState
+    method: POST
+    path: /osc/state
+    tags: [Read, Device]
+  - id: check-for-updates
+    title: Check For State Updates
+    description: Long-poll for state changes using a previously returned state fingerprint.
+    operation: checkForUpdates
+    method: POST
+    path: /osc/checkForUpdates
+    inputs: [stateFingerprint, waitTimeout]
+    tags: [Read, Device, Polling]
+  - id: take-picture
+    title: Take Picture
+    description: Capture a single still image; returns the fileUrl (and _dngFileUrl on Z1+).
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.takePicture
+    tags: [Write, Shooting]
+  - id: start-capture
+    title: Start Capture
+    description: Begin video recording, interval shooting, or composite shooting based on captureMode.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.startCapture
+    tags: [Write, Shooting]
+  - id: stop-capture
+    title: Stop Capture
+    description: Stop an in-progress video recording or interval capture.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.stopCapture
+    tags: [Write, Shooting]
+  - id: list-files
+    title: List Files
+    description: Enumerate media on the device with optional thumbnail and pagination.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.listFiles
+    inputs: [fileType, entryCount, startPosition, maxThumbSize, _detail]
+    tags: [Read, Media]
+  - id: delete-file
+    title: Delete File
+    description: Delete one or more files (all, image, video, or specific URLs).
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.delete
+    inputs: [fileUrls]
+    tags: [Write, Media]
+  - id: get-live-preview
+    title: Get Live Preview
+    description: Open a Motion JPEG live preview stream from the camera lens.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.getLivePreview
+    tags: [Read, Streaming]
+  - id: get-options
+    title: Get Options
+    description: Read one or more named camera options (ISO, shutter, white balance, etc).
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.getOptions
+    inputs: [optionNames]
+    tags: [Read, Settings]
+  - id: set-options
+    title: Set Options
+    description: Update one or more named camera options.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.setOptions
+    inputs: [options]
+    tags: [Write, Settings]
+  - id: reset
+    title: Reset
+    description: Reset camera options to factory defaults.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera.reset
+    tags: [Write, Settings]
+  - id: list-plugins
+    title: List Plug-ins
+    description: Enumerate installed plug-ins on the camera.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera._listPlugins
+    tags: [Read, Plugins]
+  - id: set-plugin
+    title: Set Plug-in
+    description: Designate the boot plug-in to launch on the camera.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera._setPlugin
+    tags: [Write, Plugins]
+  - id: plugin-control
+    title: Plug-in Control
+    description: Start, stop, or signal the running plug-in.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera._pluginControl
+    tags: [Write, Plugins]
+  - id: list-access-points
+    title: List Wi-Fi Access Points
+    description: List Wi-Fi networks the camera is configured to connect to in client mode.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera._listAccessPoints
+    tags: [Read, Network]
+  - id: set-access-point
+    title: Set Wi-Fi Access Point
+    description: Register a Wi-Fi network for client-mode operation.
+    operation: executeCommand
+    method: POST
+    path: /osc/commands/execute
+    commandName: camera._setAccessPoint
+    tags: [Write, Network]
+  - id: get-command-status
+    title: Get Command Status
+    description: Poll status / progress of a long-running command by id.
+    operation: getCommandStatus
+    method: POST
+    path: /osc/commands/status
+    tags: [Read, Polling]

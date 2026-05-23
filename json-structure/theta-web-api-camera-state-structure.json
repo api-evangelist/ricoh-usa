@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/schema/v0",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ricoh-usa/main/json-structure/theta-web-api-camera-state-structure.json",
+  "title": "RICOH THETA Camera State",
+  "type": "object",
+  "properties": {
+    "fingerprint": { "type": "string" },
+    "state": {
+      "type": "object",
+      "properties": {
+        "batteryLevel": { "type": "number" },
+        "storageUri": { "type": "string" },
+        "_captureStatus": { "type": "string" },
+        "_recordedTime": { "type": "integer" },
+        "_recordableTime": { "type": "integer" },
+        "_capturedPictures": { "type": "integer" },
+        "_latestFileUrl": { "type": "string" },
+        "_batteryState": { "type": "string" }
+      }
+    }
+  }
+}

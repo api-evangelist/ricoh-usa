@@ -1,0 +1,104 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Ricoh USA
+providerId: ricoh-usa
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: false
+tags:
+  - Printing
+  - Document Management
+  - 360 Cameras
+  - Workflow Automation
+description: |
+  Ricoh USA's API surfaces have two distinct commercial postures. The RICOH THETA Web / Bluetooth /
+  USB APIs are open, free, and unauthenticated — they ship with every THETA camera and require no
+  separate developer agreement; the cost is the price of the camera itself. The RICOH360 Cloud API
+  and Ricoh Smart Integration platform are gated commercial offerings: access requires sales contact
+  and approval, and pricing is not published publicly. Plan tiers below model both postures.
+notes: |
+  RICOH360 Cloud API and Ricoh Smart Integration pricing are not publicly listed; both require
+  contacting RICOH sales. The previously documented developer endpoints at smartintegrationapi.com
+  do not currently respond, indicating either retirement or restricted access.
+sources:
+  - https://www.ricoh360.com/developer/
+  - https://docs.ricoh360.com/
+  - https://docs-theta-api.ricoh360.com/
+  - https://www.ricoh-usa.com/en/services-and-solutions
+  - https://link.ricoh360.com/contact
+plans:
+  - id: ricoh-theta-open
+    name: RICOH THETA Open Device APIs
+    type: free
+    description: |
+      Open device APIs (OSC Web API, Bluetooth, USB) included with every THETA camera. No developer
+      key, no quota, no per-call charge. Only constraint is owning the hardware.
+    entries:
+      - label: Open device APIs
+        name: theta_open_apis
+        type: subscription
+        metric: device
+        limit: -1
+        timeFrame: lifetime
+        geo: global
+        unit: 1
+        price: included with THETA hardware purchase
+        userMultiplied: false
+    elements:
+      - name: RICOH THETA Web API
+      - name: RICOH THETA Bluetooth API
+      - name: RICOH THETA USB API
+      - name: theta-client SDK (Kotlin / Swift / React Native / Flutter)
+      - name: THETA Plug-in SDK
+  - id: ricoh360-cloud
+    name: RICOH360 Cloud API
+    type: enterprise
+    description: |
+      Cloud API for 360-degree imagery (upload, processing, sharing, fleet management). Pricing
+      is custom and not publicly disclosed; access requires application approval through RICOH360
+      sales.
+    entries:
+      - label: Custom commercial agreement
+        name: ricoh360_cloud_contract
+        type: subscription
+        metric: contract
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact RICOH360 sales (https://link.ricoh360.com/contact)
+        userMultiplied: false
+    elements:
+      - name: RICOH360 Cloud API access
+      - name: AI image processing
+      - name: Virtual tour creation
+      - name: Fleet device management (firmware, configuration)
+      - name: Application approval required
+  - id: ricoh-smart-integration
+    name: Ricoh Smart Integration
+    type: enterprise
+    description: |
+      Cloud workflow platform connecting Ricoh MFPs to cloud storage and document services. Bundled
+      with Ricoh's managed print / workplace services contracts; not a self-service developer
+      product. The standalone developer portal at smartintegrationapi.com is not currently public.
+    entries:
+      - label: Bundled with managed services contract
+        name: smart_integration_contract
+        type: subscription
+        metric: contract
+        limit: -1
+        timeFrame: year
+        geo: US
+        unit: 1
+        price: contact Ricoh USA sales (https://www.ricoh-usa.com/en/support-and-download/contact-us)
+        userMultiplied: false
+    elements:
+      - name: Scan-to-cloud (Box, Dropbox, Google Drive, OneDrive, SharePoint)
+      - name: OCR / document conversion
+      - name: Microsoft 365 / Outlook routing
+      - name: Smart Operation Panel apps on Ricoh MFPs
+      - name: Always Current Technology (ACT) delivery model
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
