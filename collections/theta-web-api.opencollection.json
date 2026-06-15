@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RICOH THETA Web API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Protocol",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Camera Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://192.168.1.1/osc/info"
+          },
+          "docs": "Returns immutable camera identity, supported API levels, endpoints, and feature flags."
+        },
+        {
+          "info": {
+            "name": "Get Camera State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://192.168.1.1/osc/state"
+          },
+          "docs": "Returns mutable state such as battery level, storage usage, capture status, and fingerprint used for change detection."
+        },
+        {
+          "info": {
+            "name": "Check For Updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://192.168.1.1/osc/checkForUpdates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Polls the camera with a known state fingerprint and returns the new fingerprint when state changes."
+        },
+        {
+          "info": {
+            "name": "Execute Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://192.168.1.1/osc/commands/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invokes an OSC command by name with a parameters object. Used for all shooting, media, settings, plug-in, and network operations."
+        },
+        {
+          "info": {
+            "name": "Get Command Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://192.168.1.1/osc/commands/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Polls the status of a long-running command using the command id returned by /osc/commands/execute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

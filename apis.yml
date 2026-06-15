@@ -66,12 +66,6 @@ apis:
         url: examples/theta-web-api-list-files-example.json
       - type: Examples
         url: examples/theta-web-api-get-options-example.json
-      - type: NaftikoCapability
-        url: capabilities/theta-camera-control.yaml
-      - type: NaftikoCapability
-        url: capabilities/theta-media-management.yaml
-      - type: NaftikoCapability
-        url: capabilities/shared/theta-web-api.yaml
   - aid: ricoh-usa:theta-bluetooth-api
     name: RICOH THETA Bluetooth API
     description: |
@@ -92,8 +86,6 @@ apis:
         url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-bluetooth-api
       - type: SDK
         url: https://github.com/ricohapi/theta-ble-client
-      - type: NaftikoCapability
-        url: capabilities/shared/theta-bluetooth-api.yaml
   - aid: ricoh-usa:theta-usb-api
     name: RICOH THETA USB API
     description: |
@@ -114,8 +106,6 @@ apis:
         url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-usb-api
       - type: SampleCode
         url: https://github.com/ricohapi/libuvc-theta-sample
-      - type: NaftikoCapability
-        url: capabilities/shared/theta-usb-api.yaml
   - aid: ricoh-usa:ricoh360-cloud-api
     name: RICOH360 Cloud API
     description: |
@@ -137,8 +127,6 @@ apis:
         url: https://www.ricoh360.com/developer/
       - type: ContactSales
         url: https://link.ricoh360.com/contact
-      - type: NaftikoCapability
-        url: capabilities/shared/ricoh360-cloud-api.yaml
   - aid: ricoh-usa:smart-integration
     name: Ricoh Smart Integration
     description: |
