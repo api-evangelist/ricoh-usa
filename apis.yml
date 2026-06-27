@@ -84,7 +84,7 @@ apis:
         url: https://docs-theta-api.ricoh360.com/bluetooth-api/
       - type: SourceSpec
         url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-bluetooth-api
-      - type: SDK
+      - type: SDKs
         url: https://github.com/ricohapi/theta-ble-client
   - aid: ricoh-usa:theta-usb-api
     name: RICOH THETA USB API
@@ -247,7 +247,7 @@ common:
           - awesome-theta
           - fake-theta
           - libuvc-theta-sample
-  - type: SDK
+  - type: SDKs
     data:
       - name: theta-client (Kotlin Multiplatform)
         url: https://github.com/ricohapi/theta-client
