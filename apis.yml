@@ -151,6 +151,8 @@ apis:
       - type: ContactSales
         url: https://www.ricoh-usa.com/en/support-and-download/contact-us
 common:
+  - type: AgenticAccess
+    url: agentic-access/ricoh-usa-agentic-access.yml
   - type: DomainSecurity
     url: security/ricoh-usa-domain-security.yml
   - type: Website
