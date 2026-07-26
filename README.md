@@ -137,17 +137,6 @@ requires application approval through RICOH360 sales / developer contact — no 
 - [Postman Collection](collections/theta-web-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 - [Open Collection](collections/theta-web-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-### Ricoh Smart Integration
-
-Cloud workflow platform that connects Ricoh multifunction printers (MFPs) and Smart Operation Panel
-devices to cloud storage (Box, Dropbox, Google Drive, OneDrive, SharePoint), document conversion
-(OCR / PDF), and Microsoft 365 / email distribution workflows. Branded "Always Current Technology"
-delivery model. Previously exposed a documented developer API surface at smartintegrationapi.com and
-api.smartintegrationapi.com; those endpoints currently refuse public connections, so partner / SI
-integrations route through Ricoh USA professional services rather than a self-service developer
-portal at this time.
-
-- **Human URL:** [https://www.ricoh-usa.com/en/services-and-solutions](https://www.ricoh-usa.com/en/services-and-solutions)
 
 #### Tags
 

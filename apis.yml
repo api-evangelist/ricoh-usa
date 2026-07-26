@@ -2,7 +2,19 @@ aid: ricoh-usa
 url: https://raw.githubusercontent.com/api-evangelist/ricoh-usa/refs/heads/main/apis.yml
 name: Ricoh USA
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+    - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ricoh-usa.png
 tags:
   - Printing
   - Document Management
@@ -20,34 +32,93 @@ description: |
   API access is gated behind application approval; the older Ricoh Smart Integration developer endpoints
   (smartintegrationapi.com / api.smartintegrationapi.com) are not currently publicly reachable.
 created: '2026-05-23'
-modified: '2026-05-23'
+modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
-  - aid: ricoh-usa:theta-web-api
-    name: RICOH THETA Web API
-    description: |
-      HTTP-over-Wi-Fi API for controlling RICOH THETA 360 cameras (Z1, X, A1). Conforms to the Open Spherical
-      Camera (OSC) API Level 2 specification by Google, with Ricoh vendor extensions. Exposes a small set of
-      protocol endpoints (/osc/info, /osc/state, /osc/commands/execute, /osc/commands/status) plus a catalog
-      of 26+ OSC commands such as camera.takePicture, camera.startCapture, camera.listFiles, camera.getOptions,
-      camera.setOptions, and plugin-control commands. The device acts as an access point or client-mode peer.
+  - aid: ricoh-usa:theta-bluetooth-api
+    name: RICOH THETA Bluetooth API
+    description: >
+      GATT-based Bluetooth Low Energy API for controlling RICOH THETA cameras (V, Z1, X, A1). Built on
+
+      Bluetooth 4.2 Core Specifications with Ricoh-specific service and characteristic extensions for
+
+      shutter control, status reporting, camera information, and Wi-Fi pairing handoff.
     tags:
       - 360 Cameras
-      - Imaging
-      - OSC
+      - Bluetooth
+      - GATT
       - Camera Control
     image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+    humanURL: https://docs-theta-api.ricoh360.com/bluetooth-api/
+    properties:
+      - type: Documentation
+        url: https://docs-theta-api.ricoh360.com/bluetooth-api/
+      - type: SourceSpec
+        url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-bluetooth-api
+      - type: SDKs
+        url: https://github.com/ricohapi/theta-ble-client
+  - aid: ricoh-usa:theta-usb-api
+    name: RICOH THETA USB API
+    description: >
+      MTP (Media Transfer Protocol v1.1) based USB API for controlling RICOH THETA cameras (S and later,
+
+      including Z1, X, A1) when tethered over USB. Uses standard MTP operations with Ricoh-proprietary
+
+      extensions for live preview, plugin management, and 360 metadata access.
+    tags:
+      - 360 Cameras
+      - USB
+      - MTP
+      - Camera Control
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+    humanURL: https://docs-theta-api.ricoh360.com/usb-api/
+    properties:
+      - type: Documentation
+        url: https://docs-theta-api.ricoh360.com/usb-api/
+      - type: SourceSpec
+        url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-usb-api
+      - type: SampleCode
+        url: https://github.com/ricohapi/libuvc-theta-sample
+  - aid: ricoh-usa:ricoh360-cloud-api
+    name: RICOH360 Cloud API
+    description: >
+      Hosted REST API for capture, upload, sharing, and management of 360-degree imagery from RICOH THETA
+
+      and partner spherical cameras. Provides serverless image processing, AI-powered editing, virtual tour
+
+      creation, archiving, and bulk device administration (firmware updates, configuration). API access
+
+      requires application approval through RICOH360 sales / developer contact — no self-service signup.
+    tags:
+      - 360 Cameras
+      - Cloud
+      - Image Processing
+      - Spatial Data
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+    humanURL: https://www.ricoh360.com/developer/
+    properties:
+      - type: Documentation
+        url: https://docs.ricoh360.com/
+      - type: Portal
+        url: https://www.ricoh360.com/developer/
+      - type: ContactSales
+        url: https://link.ricoh360.com/contact
+  - aid: ricoh-usa:ricoh-usa-protocol-api
+    name: Ricoh USA Protocol API
+    description: Core OSC protocol endpoints
     humanURL: https://docs-theta-api.ricoh360.com/web-api/
     baseURL: http://192.168.1.1
+    tags:
+      - Protocol
     properties:
+      - type: OpenAPI
+        url: openapi/ricoh-usa-protocol-api-openapi.yml
       - type: Documentation
         url: https://docs-theta-api.ricoh360.com/web-api/
       - type: GettingStarted
         url: https://ricoh360.notion.site/THETA-API-Guidance-2782875d3632434f9049a641de642142
       - type: SourceSpec
         url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-web-api-v2.1
-      - type: OpenAPI
-        url: openapi/theta-web-api-openapi.yml
       - type: JSONSchema
         url: json-schema/theta-web-api-device-info-schema.json
       - type: JSONSchema
@@ -66,90 +137,6 @@ apis:
         url: examples/theta-web-api-list-files-example.json
       - type: Examples
         url: examples/theta-web-api-get-options-example.json
-  - aid: ricoh-usa:theta-bluetooth-api
-    name: RICOH THETA Bluetooth API
-    description: |
-      GATT-based Bluetooth Low Energy API for controlling RICOH THETA cameras (V, Z1, X, A1). Built on
-      Bluetooth 4.2 Core Specifications with Ricoh-specific service and characteristic extensions for
-      shutter control, status reporting, camera information, and Wi-Fi pairing handoff.
-    tags:
-      - 360 Cameras
-      - Bluetooth
-      - GATT
-      - Camera Control
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://docs-theta-api.ricoh360.com/bluetooth-api/
-    properties:
-      - type: Documentation
-        url: https://docs-theta-api.ricoh360.com/bluetooth-api/
-      - type: SourceSpec
-        url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-bluetooth-api
-      - type: SDKs
-        url: https://github.com/ricohapi/theta-ble-client
-  - aid: ricoh-usa:theta-usb-api
-    name: RICOH THETA USB API
-    description: |
-      MTP (Media Transfer Protocol v1.1) based USB API for controlling RICOH THETA cameras (S and later,
-      including Z1, X, A1) when tethered over USB. Uses standard MTP operations with Ricoh-proprietary
-      extensions for live preview, plugin management, and 360 metadata access.
-    tags:
-      - 360 Cameras
-      - USB
-      - MTP
-      - Camera Control
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://docs-theta-api.ricoh360.com/usb-api/
-    properties:
-      - type: Documentation
-        url: https://docs-theta-api.ricoh360.com/usb-api/
-      - type: SourceSpec
-        url: https://github.com/ricohapi/theta-api-specs/tree/main/theta-usb-api
-      - type: SampleCode
-        url: https://github.com/ricohapi/libuvc-theta-sample
-  - aid: ricoh-usa:ricoh360-cloud-api
-    name: RICOH360 Cloud API
-    description: |
-      Hosted REST API for capture, upload, sharing, and management of 360-degree imagery from RICOH THETA
-      and partner spherical cameras. Provides serverless image processing, AI-powered editing, virtual tour
-      creation, archiving, and bulk device administration (firmware updates, configuration). API access
-      requires application approval through RICOH360 sales / developer contact — no self-service signup.
-    tags:
-      - 360 Cameras
-      - Cloud
-      - Image Processing
-      - Spatial Data
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.ricoh360.com/developer/
-    properties:
-      - type: Documentation
-        url: https://docs.ricoh360.com/
-      - type: Portal
-        url: https://www.ricoh360.com/developer/
-      - type: ContactSales
-        url: https://link.ricoh360.com/contact
-  - aid: ricoh-usa:smart-integration
-    name: Ricoh Smart Integration
-    description: |
-      Cloud workflow platform that connects Ricoh multifunction printers (MFPs) and Smart Operation Panel
-      devices to cloud storage (Box, Dropbox, Google Drive, OneDrive, SharePoint), document conversion
-      (OCR / PDF), and Microsoft 365 / email distribution workflows. Branded "Always Current Technology"
-      delivery model. Previously exposed a documented developer API surface at smartintegrationapi.com and
-      api.smartintegrationapi.com; those endpoints currently refuse public connections, so partner / SI
-      integrations route through Ricoh USA professional services rather than a self-service developer
-      portal at this time.
-    tags:
-      - Workflow Automation
-      - MFP
-      - Document Management
-      - Cloud Storage
-      - OCR
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.ricoh-usa.com/en/services-and-solutions
-    properties:
-      - type: Marketing
-        url: https://www.ricoh-usa.com/en/services-and-solutions
-      - type: ContactSales
-        url: https://www.ricoh-usa.com/en/support-and-download/contact-us
 common:
   - type: AgenticAccess
     url: agentic-access/ricoh-usa-agentic-access.yml
@@ -313,6 +300,8 @@ common:
         url: capabilities/shared/theta-usb-api.yaml
       - name: shared/ricoh360-cloud-api
         url: capabilities/shared/ricoh360-cloud-api.yaml
+  - type: Contact
+    url: https://www.ricoh-usa.com/en/services-and-solutions
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
