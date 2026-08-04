@@ -1,0 +1,307 @@
+openapi: 3.1.0
+info:
+  title: RICOH THETA Web API
+  version: 2.1.0
+  description: |
+    HTTP-over-Wi-Fi API for controlling RICOH THETA 360-degree cameras (Z1, X, A1) conforming to the
+    Open Spherical Camera (OSC) API Level 2 specification (Google) with Ricoh vendor extensions. The
+    camera operates either in access-point mode (default base URL http://192.168.1.1) or as a Wi-Fi
+    client. All commands are POST requests to /osc/commands/execute with a JSON body identifying the
+    command name and parameters; long-running commands return an in-progress state polled via
+    /osc/commands/status.
+  contact:
+    name: RICOH360 Developer Support
+    url: https://link.ricoh360.com/contact
+  license:
+    name: Documentation under RICOH terms
+    url: https://docs-theta-api.ricoh360.com/
+  x-source: https://github.com/ricohapi/theta-api-specs/tree/main/theta-web-api-v2.1
+servers:
+  - url: http://192.168.1.1
+    description: THETA camera in access-point mode (default)
+tags:
+  - name: Protocol
+    description: Core OSC protocol endpoints
+  - name: Shooting
+    description: Image and video capture commands
+  - name: Media
+    description: File listing, retrieval, and deletion
+  - name: Settings
+    description: Camera options and state inspection
+  - name: Plugins
+    description: Plug-in inventory and lifecycle
+  - name: Network
+    description: Wi-Fi and Bluetooth configuration
+paths:
+  /osc/info:
+    get:
+      tags: [Protocol]
+      summary: Get Camera Info
+      operationId: getInfo
+      description: Returns immutable camera identity, supported API levels, endpoints, and feature flags.
+      responses:
+        '200':
+          description: Camera information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CameraInfo'
+  /osc/state:
+    post:
+      tags: [Protocol]
+      summary: Get Camera State
+      operationId: getState
+      description: Returns mutable state such as battery level, storage usage, capture status, and fingerprint used for change detection.
+      responses:
+        '200':
+          description: Camera state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CameraState'
+  /osc/checkForUpdates:
+    post:
+      tags: [Protocol]
+      summary: Check For Updates
+      operationId: checkForUpdates
+      description: Polls the camera with a known state fingerprint and returns the new fingerprint when state changes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [stateFingerprint]
+              properties:
+                stateFingerprint:
+                  type: string
+                waitTimeout:
+                  type: integer
+      responses:
+        '200':
+          description: Updated fingerprint
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stateFingerprint:
+                    type: string
+                  throttleTimeout:
+                    type: integer
+  /osc/commands/execute:
+    post:
+      tags: [Protocol]
+      summary: Execute Command
+      operationId: executeCommand
+      description: Invokes an OSC command by name with a parameters object. Used for all shooting, media, settings, plug-in, and network operations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandExecuteRequest'
+      responses:
+        '200':
+          description: Command result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandExecuteResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /osc/commands/status:
+    post:
+      tags: [Protocol]
+      summary: Get Command Status
+      operationId: getCommandStatus
+      description: Polls the status of a long-running command using the command id returned by /osc/commands/execute.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Command status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandExecuteResponse'
+components:
+  schemas:
+    CameraInfo:
+      type: object
+      properties:
+        manufacturer:
+          type: string
+        model:
+          type: string
+        serialNumber:
+          type: string
+        firmwareVersion:
+          type: string
+        supportUrl:
+          type: string
+        gps:
+          type: boolean
+        gyro:
+          type: boolean
+        endpoints:
+          type: object
+          properties:
+            httpPort:
+              type: integer
+            httpUpdatesPort:
+              type: integer
+        apiLevel:
+          type: array
+          items:
+            type: integer
+        uptime:
+          type: integer
+        api:
+          type: array
+          items:
+            type: string
+        _wlanMacAddress:
+          type: string
+        _bluetoothMacAddress:
+          type: string
+    CameraState:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+        state:
+          type: object
+          properties:
+            batteryLevel:
+              type: number
+            storageUri:
+              type: string
+            _captureStatus:
+              type: string
+              enum: [idle, shooting, self-timer-countdown, bracket-shooting, converting, timeshift-shooting]
+            _recordedTime:
+              type: integer
+            _recordableTime:
+              type: integer
+            _capturedPictures:
+              type: integer
+            _latestFileUrl:
+              type: string
+            _batteryState:
+              type: string
+            _apiVersion:
+              type: integer
+    CommandExecuteRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          description: OSC command name (e.g. camera.takePicture, camera.startCapture)
+          examples:
+            - camera.takePicture
+            - camera.startCapture
+            - camera.stopCapture
+            - camera.listFiles
+            - camera.delete
+            - camera.getLivePreview
+            - camera.getOptions
+            - camera.setOptions
+            - camera.reset
+            - camera._finishWlan
+            - camera._getMetadata
+            - camera._getMySetting
+            - camera._setMySetting
+            - camera._deleteMySetting
+            - camera._stopSelfTimer
+            - camera._convertVideoFormats
+            - camera._cancelVideoConvert
+            - camera._setBluetoothDevice
+            - camera._listAccessPoints
+            - camera._setAccessPoint
+            - camera._deleteAccessPoint
+            - camera._listPlugins
+            - camera._setPlugin
+            - camera._pluginControl
+            - camera._getPluginLicense
+            - camera._getPluginOrders
+            - camera._setPluginOrders
+        parameters:
+          type: object
+          additionalProperties: true
+    CommandExecuteResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          type: string
+          enum: [done, inProgress, error]
+        id:
+          type: string
+        results:
+          type: object
+          additionalProperties: true
+        error:
+          $ref: '#/components/schemas/Error'
+        progress:
+          type: object
+          properties:
+            completion:
+              type: number
+    FileEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        fileUrl:
+          type: string
+        size:
+          type: integer
+        dateTimeZone:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        thumbnail:
+          type: string
+        isProcessed:
+          type: boolean
+        previewUrl:
+          type: string
+        _projectionType:
+          type: string
+        _codec:
+          type: string
+        _thumbSize:
+          type: integer
+        _intervalCaptureGroupId:
+          type: string
+        _compositeShootingGroupId:
+          type: string
+        _autoBracketGroupId:
+          type: string
+        _recordTime:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
+        message:
+          type: string

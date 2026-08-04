@@ -1,0 +1,14 @@
+{
+  "provider": "ricoh-usa",
+  "sources": [
+    "ricoh-usa-protocol-api-openapi.yml"
+  ],
+  "outputs": [
+    "ricoh-usa-protocol-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
