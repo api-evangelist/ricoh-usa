@@ -33,7 +33,7 @@ description: |
   (smartintegrationapi.com / api.smartintegrationapi.com) are not currently publicly reachable.
 created: '2026-05-23'
 modified: '2026-07-25'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: ricoh-usa:theta-bluetooth-api
     name: RICOH THETA Bluetooth API
