@@ -1,0 +1,504 @@
+{
+  "item": [
+    {
+      "id": "7edf4b3c-36e7-4cb5-9aa4-fc612caf9768",
+      "name": "Protocol",
+      "description": {
+        "content": "Core OSC protocol endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c70fface-6203-4796-af39-04298c7f6167",
+          "name": "Get Camera Info",
+          "request": {
+            "name": "Get Camera Info",
+            "description": {
+              "content": "Returns immutable camera identity, supported API levels, endpoints, and feature flags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "osc",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15e9cd73-e468-4adf-b222-9815ba801b53",
+              "name": "Camera information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"manufacturer\": \"string\",\n  \"model\": \"string\",\n  \"serialNumber\": \"string\",\n  \"firmwareVersion\": \"string\",\n  \"supportUrl\": \"string\",\n  \"gps\": true,\n  \"gyro\": false,\n  \"endpoints\": {\n    \"httpPort\": 9458,\n    \"httpUpdatesPort\": 9504\n  },\n  \"apiLevel\": [\n    5225,\n    3632\n  ],\n  \"uptime\": 1497,\n  \"api\": [\n    \"string\",\n    \"string\"\n  ],\n  \"_wlanMacAddress\": \"string\",\n  \"_bluetoothMacAddress\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a2fba9d-2ab1-4f02-b3d9-4c0c982bdf81",
+          "name": "Get Camera State",
+          "request": {
+            "name": "Get Camera State",
+            "description": {
+              "content": "Returns mutable state such as battery level, storage usage, capture status, and fingerprint used for change detection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "osc",
+                "state"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23710df8-3373-43ca-b9ca-405171767d2f",
+              "name": "Camera state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fingerprint\": \"string\",\n  \"state\": {\n    \"batteryLevel\": 4744.008525352896,\n    \"storageUri\": \"string\",\n    \"_captureStatus\": \"converting\",\n    \"_recordedTime\": 7298,\n    \"_recordableTime\": 2306,\n    \"_capturedPictures\": 6550,\n    \"_latestFileUrl\": \"string\",\n    \"_batteryState\": \"string\",\n    \"_apiVersion\": 9859\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3546e934-2931-41a9-88e5-2da1010dce9a",
+          "name": "Check For Updates",
+          "request": {
+            "name": "Check For Updates",
+            "description": {
+              "content": "Polls the camera with a known state fingerprint and returns the new fingerprint when state changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "osc",
+                "checkForUpdates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stateFingerprint\": \"<string>\",\n  \"waitTimeout\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5321698d-a102-48ff-a8ba-83961b632c43",
+              "name": "Updated fingerprint",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "checkForUpdates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stateFingerprint\": \"<string>\",\n  \"waitTimeout\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"stateFingerprint\": \"string\",\n  \"throttleTimeout\": 2165\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be0ded03-2d54-4e05-8507-1a6ae04dd1e2",
+          "name": "Execute Command",
+          "request": {
+            "name": "Execute Command",
+            "description": {
+              "content": "Invokes an OSC command by name with a parameters object. Used for all shooting, media, settings, plug-in, and network operations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "osc",
+                "commands",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": 4855,\n    \"key_1\": 6957.209042890459\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "434aaaa3-d969-4aac-a3d4-e947d390902c",
+              "name": "Command result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "commands",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"camera.takePicture\",\n  \"parameters\": {\n    \"key_0\": true,\n    \"key_1\": true,\n    \"key_2\": 4631\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"state\": \"error\",\n  \"id\": \"string\",\n  \"results\": {\n    \"key_0\": 9396.12170135496,\n    \"key_1\": 9283.00032197278,\n    \"key_2\": false\n  },\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"progress\": {\n    \"completion\": 5461.224131293194\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "096c1fba-d6a2-49b6-b637-25b98ff711ef",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "commands",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"camera.takePicture\",\n  \"parameters\": {\n    \"key_0\": true,\n    \"key_1\": true,\n    \"key_2\": 4631\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b42b3541-84a8-4444-9c2f-d9a64e9c32ec",
+          "name": "Get Command Status",
+          "request": {
+            "name": "Get Command Status",
+            "description": {
+              "content": "Polls the status of a long-running command using the command id returned by /osc/commands/execute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "osc",
+                "commands",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "379ab8d1-cb03-4c96-b59d-61b7926d543c",
+              "name": "Command status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "osc",
+                    "commands",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"state\": \"error\",\n  \"id\": \"string\",\n  \"results\": {\n    \"key_0\": 9396.12170135496,\n    \"key_1\": 9283.00032197278,\n    \"key_2\": false\n  },\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"progress\": {\n    \"completion\": 5461.224131293194\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://192.168.1.1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "48e2b3b6-ae94-430f-818d-4ffb0cf1978a",
+    "name": "RICOH THETA Web Protocol API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP-over-Wi-Fi API for controlling RICOH THETA 360-degree cameras (Z1, X, A1) conforming to the\nOpen Spherical Camera (OSC) API Level 2 specification (Google) with Ricoh vendor extensions. The\ncamera operates either in access-point mode (default base URL http://192.168.1.1) or as a Wi-Fi\nclient. All commands are POST requests to /osc/commands/execute with a JSON body identifying the\ncommand name and parameters; long-running commands return an in-progress state polled via\n/osc/commands/status.\n\n\nContact Support:\n Name: RICOH360 Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
