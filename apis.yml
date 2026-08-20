@@ -17,6 +17,13 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ricoh-usa.png
 tags:
   - Printing
+  - Document-Management
+  - Workplace Services
+  - Imaging
+  - 360 Cameras
+  - Workflow-Automation
+tags_raw:
+  - Printing
   - Document Management
   - Workplace Services
   - Imaging
