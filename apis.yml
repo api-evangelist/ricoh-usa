@@ -293,7 +293,7 @@ common:
       - name: libuvc-theta-sample
         url: https://github.com/ricohapi/libuvc-theta-sample
         description: Sample code demonstrating 4K/2K live preview from THETA via USB
-  - type: Samples
+  - type: Examples
     data:
       - name: theta-plugin-camera-api-sample
         url: https://github.com/ricohapi/theta-plugin-camera-api-sample
