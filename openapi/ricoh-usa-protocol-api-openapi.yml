@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: RICOH THETA Web Protocol API
   version: 2.1.0
@@ -12,9 +12,7 @@ info:
 
     command name and parameters; long-running commands return an in-progress state polled via
 
-    /osc/commands/status.
-
-    '
+    /osc/commands/status.'
   contact:
     name: RICOH360 Developer Support
     url: https://link.ricoh360.com/contact
@@ -142,6 +140,47 @@ paths:
                 $ref: '#/components/schemas/CommandExecuteResponse'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
+        message:
+          type: string
+    CameraState:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+        state:
+          type: object
+          properties:
+            batteryLevel:
+              type: number
+            storageUri:
+              type: string
+            _captureStatus:
+              type: string
+              enum:
+              - idle
+              - shooting
+              - self-timer-countdown
+              - bracket-shooting
+              - converting
+              - timeshift-shooting
+            _recordedTime:
+              type: integer
+            _recordableTime:
+              type: integer
+            _capturedPictures:
+              type: integer
+            _latestFileUrl:
+              type: string
+            _batteryState:
+              type: string
+            _apiVersion:
+              type: integer
     CameraInfo:
       type: object
       properties:
@@ -219,47 +258,6 @@ components:
         parameters:
           type: object
           additionalProperties: true
-    CameraState:
-      type: object
-      properties:
-        fingerprint:
-          type: string
-        state:
-          type: object
-          properties:
-            batteryLevel:
-              type: number
-            storageUri:
-              type: string
-            _captureStatus:
-              type: string
-              enum:
-              - idle
-              - shooting
-              - self-timer-countdown
-              - bracket-shooting
-              - converting
-              - timeshift-shooting
-            _recordedTime:
-              type: integer
-            _recordableTime:
-              type: integer
-            _capturedPictures:
-              type: integer
-            _latestFileUrl:
-              type: string
-            _batteryState:
-              type: string
-            _apiVersion:
-              type: integer
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
-        message:
-          type: string
     CommandExecuteResponse:
       type: object
       properties:
