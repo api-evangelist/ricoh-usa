@@ -140,14 +140,29 @@ paths:
                 $ref: '#/components/schemas/CommandExecuteResponse'
 components:
   schemas:
-    Error:
+    CommandExecuteResponse:
       type: object
       properties:
-        code:
+        name:
           type: string
-          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
-        message:
+        state:
           type: string
+          enum:
+          - done
+          - inProgress
+          - error
+        id:
+          type: string
+        results:
+          type: object
+          additionalProperties: true
+        error:
+          $ref: '#/components/schemas/Error'
+        progress:
+          type: object
+          properties:
+            completion:
+              type: number
     CameraState:
       type: object
       properties:
@@ -181,6 +196,14 @@ components:
               type: string
             _apiVersion:
               type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
+        message:
+          type: string
     CameraInfo:
       type: object
       properties:
@@ -258,26 +281,3 @@ components:
         parameters:
           type: object
           additionalProperties: true
-    CommandExecuteResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        state:
-          type: string
-          enum:
-          - done
-          - inProgress
-          - error
-        id:
-          type: string
-        results:
-          type: object
-          additionalProperties: true
-        error:
-          $ref: '#/components/schemas/Error'
-        progress:
-          type: object
-          properties:
-            completion:
-              type: number

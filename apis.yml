@@ -29,11 +29,11 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ricoh-usa.png
 tags:
   - Printing
-  - Document-Management
+  - Document Management
   - Workplace Services
   - Imaging
   - 360 Cameras
-  - Workflow-Automation
+  - Workflow Automation
 tags_raw:
   - Printing
   - Document Management
@@ -41,6 +41,8 @@ tags_raw:
   - Imaging
   - 360 Cameras
   - Workflow Automation
+  - Document-Management
+  - Workflow-Automation
 description: |
   Ricoh USA is the United States operating company of Ricoh Co., Ltd. — a global imaging, printing, document
   services, and workplace technology vendor. Beyond its printer / MFP and managed document services portfolio,
