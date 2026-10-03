@@ -140,70 +140,6 @@ paths:
                 $ref: '#/components/schemas/CommandExecuteResponse'
 components:
   schemas:
-    CommandExecuteResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        state:
-          type: string
-          enum:
-          - done
-          - inProgress
-          - error
-        id:
-          type: string
-        results:
-          type: object
-          additionalProperties: true
-        error:
-          $ref: '#/components/schemas/Error'
-        progress:
-          type: object
-          properties:
-            completion:
-              type: number
-    CameraState:
-      type: object
-      properties:
-        fingerprint:
-          type: string
-        state:
-          type: object
-          properties:
-            batteryLevel:
-              type: number
-            storageUri:
-              type: string
-            _captureStatus:
-              type: string
-              enum:
-              - idle
-              - shooting
-              - self-timer-countdown
-              - bracket-shooting
-              - converting
-              - timeshift-shooting
-            _recordedTime:
-              type: integer
-            _recordableTime:
-              type: integer
-            _capturedPictures:
-              type: integer
-            _latestFileUrl:
-              type: string
-            _batteryState:
-              type: string
-            _apiVersion:
-              type: integer
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
-        message:
-          type: string
     CameraInfo:
       type: object
       properties:
@@ -242,6 +178,70 @@ components:
           type: string
         _bluetoothMacAddress:
           type: string
+    CommandExecuteResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          type: string
+          enum:
+          - done
+          - inProgress
+          - error
+        id:
+          type: string
+        results:
+          type: object
+          additionalProperties: true
+        error:
+          $ref: '#/components/schemas/Error'
+        progress:
+          type: object
+          properties:
+            completion:
+              type: number
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
+        message:
+          type: string
+    CameraState:
+      type: object
+      properties:
+        fingerprint:
+          type: string
+        state:
+          type: object
+          properties:
+            batteryLevel:
+              type: number
+            storageUri:
+              type: string
+            _captureStatus:
+              type: string
+              enum:
+              - idle
+              - shooting
+              - self-timer-countdown
+              - bracket-shooting
+              - converting
+              - timeshift-shooting
+            _recordedTime:
+              type: integer
+            _recordableTime:
+              type: integer
+            _capturedPictures:
+              type: integer
+            _latestFileUrl:
+              type: string
+            _batteryState:
+              type: string
+            _apiVersion:
+              type: integer
     CommandExecuteRequest:
       type: object
       required:
