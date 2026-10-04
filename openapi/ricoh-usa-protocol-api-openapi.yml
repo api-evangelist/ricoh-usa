@@ -140,44 +140,45 @@ paths:
                 $ref: '#/components/schemas/CommandExecuteResponse'
 components:
   schemas:
-    CameraInfo:
+    CommandExecuteRequest:
       type: object
+      required:
+      - name
       properties:
-        manufacturer:
+        name:
           type: string
-        model:
-          type: string
-        serialNumber:
-          type: string
-        firmwareVersion:
-          type: string
-        supportUrl:
-          type: string
-        gps:
-          type: boolean
-        gyro:
-          type: boolean
-        endpoints:
+          description: OSC command name (e.g. camera.takePicture, camera.startCapture)
+          examples:
+          - camera.takePicture
+          - camera.startCapture
+          - camera.stopCapture
+          - camera.listFiles
+          - camera.delete
+          - camera.getLivePreview
+          - camera.getOptions
+          - camera.setOptions
+          - camera.reset
+          - camera._finishWlan
+          - camera._getMetadata
+          - camera._getMySetting
+          - camera._setMySetting
+          - camera._deleteMySetting
+          - camera._stopSelfTimer
+          - camera._convertVideoFormats
+          - camera._cancelVideoConvert
+          - camera._setBluetoothDevice
+          - camera._listAccessPoints
+          - camera._setAccessPoint
+          - camera._deleteAccessPoint
+          - camera._listPlugins
+          - camera._setPlugin
+          - camera._pluginControl
+          - camera._getPluginLicense
+          - camera._getPluginOrders
+          - camera._setPluginOrders
+        parameters:
           type: object
-          properties:
-            httpPort:
-              type: integer
-            httpUpdatesPort:
-              type: integer
-        apiLevel:
-          type: array
-          items:
-            type: integer
-        uptime:
-          type: integer
-        api:
-          type: array
-          items:
-            type: string
-        _wlanMacAddress:
-          type: string
-        _bluetoothMacAddress:
-          type: string
+          additionalProperties: true
     CommandExecuteResponse:
       type: object
       properties:
@@ -242,42 +243,41 @@ components:
               type: string
             _apiVersion:
               type: integer
-    CommandExecuteRequest:
+    CameraInfo:
       type: object
-      required:
-      - name
       properties:
-        name:
+        manufacturer:
           type: string
-          description: OSC command name (e.g. camera.takePicture, camera.startCapture)
-          examples:
-          - camera.takePicture
-          - camera.startCapture
-          - camera.stopCapture
-          - camera.listFiles
-          - camera.delete
-          - camera.getLivePreview
-          - camera.getOptions
-          - camera.setOptions
-          - camera.reset
-          - camera._finishWlan
-          - camera._getMetadata
-          - camera._getMySetting
-          - camera._setMySetting
-          - camera._deleteMySetting
-          - camera._stopSelfTimer
-          - camera._convertVideoFormats
-          - camera._cancelVideoConvert
-          - camera._setBluetoothDevice
-          - camera._listAccessPoints
-          - camera._setAccessPoint
-          - camera._deleteAccessPoint
-          - camera._listPlugins
-          - camera._setPlugin
-          - camera._pluginControl
-          - camera._getPluginLicense
-          - camera._getPluginOrders
-          - camera._setPluginOrders
-        parameters:
+        model:
+          type: string
+        serialNumber:
+          type: string
+        firmwareVersion:
+          type: string
+        supportUrl:
+          type: string
+        gps:
+          type: boolean
+        gyro:
+          type: boolean
+        endpoints:
           type: object
-          additionalProperties: true
+          properties:
+            httpPort:
+              type: integer
+            httpUpdatesPort:
+              type: integer
+        apiLevel:
+          type: array
+          items:
+            type: integer
+        uptime:
+          type: integer
+        api:
+          type: array
+          items:
+            type: string
+        _wlanMacAddress:
+          type: string
+        _bluetoothMacAddress:
+          type: string
