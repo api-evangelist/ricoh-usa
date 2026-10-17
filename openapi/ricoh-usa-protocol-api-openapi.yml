@@ -140,6 +140,52 @@ paths:
                 $ref: '#/components/schemas/CommandExecuteResponse'
 components:
   schemas:
+    CameraInfo:
+      type: object
+      properties:
+        manufacturer:
+          type: string
+        model:
+          type: string
+        serialNumber:
+          type: string
+        firmwareVersion:
+          type: string
+        supportUrl:
+          type: string
+        gps:
+          type: boolean
+        gyro:
+          type: boolean
+        endpoints:
+          type: object
+          properties:
+            httpPort:
+              type: integer
+            httpUpdatesPort:
+              type: integer
+        apiLevel:
+          type: array
+          items:
+            type: integer
+        uptime:
+          type: integer
+        api:
+          type: array
+          items:
+            type: string
+        _wlanMacAddress:
+          type: string
+        _bluetoothMacAddress:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
+        message:
+          type: string
     CommandExecuteRequest:
       type: object
       required:
@@ -179,37 +225,6 @@ components:
         parameters:
           type: object
           additionalProperties: true
-    CommandExecuteResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        state:
-          type: string
-          enum:
-          - done
-          - inProgress
-          - error
-        id:
-          type: string
-        results:
-          type: object
-          additionalProperties: true
-        error:
-          $ref: '#/components/schemas/Error'
-        progress:
-          type: object
-          properties:
-            completion:
-              type: number
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: OSC / Ricoh-specific error code such as missingParameter, invalidParameterName, invalidParameterValue, disabledCommand, cameraInExclusiveUse.
-        message:
-          type: string
     CameraState:
       type: object
       properties:
@@ -243,41 +258,26 @@ components:
               type: string
             _apiVersion:
               type: integer
-    CameraInfo:
+    CommandExecuteResponse:
       type: object
       properties:
-        manufacturer:
+        name:
           type: string
-        model:
+        state:
           type: string
-        serialNumber:
+          enum:
+          - done
+          - inProgress
+          - error
+        id:
           type: string
-        firmwareVersion:
-          type: string
-        supportUrl:
-          type: string
-        gps:
-          type: boolean
-        gyro:
-          type: boolean
-        endpoints:
+        results:
+          type: object
+          additionalProperties: true
+        error:
+          $ref: '#/components/schemas/Error'
+        progress:
           type: object
           properties:
-            httpPort:
-              type: integer
-            httpUpdatesPort:
-              type: integer
-        apiLevel:
-          type: array
-          items:
-            type: integer
-        uptime:
-          type: integer
-        api:
-          type: array
-          items:
-            type: string
-        _wlanMacAddress:
-          type: string
-        _bluetoothMacAddress:
-          type: string
+            completion:
+              type: number
